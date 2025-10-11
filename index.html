@@ -2,282 +2,325 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <title>Sabflip | The LEADING in-game ROBLOX game site!</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="Sabflip | The LEADING in-game ROBLOX game site!" />
-    <meta name="description"
-        content="Sabflip is the first in-game ROBLOX game site! Try your luck with your in-game ROBLOX ITEMS on our unique PVP game modes!" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://sabflip.com" />
-    <meta property="og:title" content="Sabflip | The LEADING in-game ROBLOX game site!" />
-    <meta property="og:description"
-        content="Sabflip is the first in-game ROBLOX game site! Try your luck with your in-game ROBLOX ITEMS on our unique PVP game modes!" />
+       
+    <meta charset="utf-8" />
+        <title>Sabflip | The LEADING in-game ROBLOX game site!</title>
+       
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       
+    <meta name="title" content="Sabflip | The LEADING in-game ROBLOX game site!" />
+       
+    <meta name="description"        
+        content="Sabflip is the first in-game ROBLOX game site! Try your luck with your in-game ROBLOX ITEMS on our unique PVP game modes!" />
+       
+    <meta property="og:type" content="website" />
+       
+    <meta property="og:url" content="https://sabflip.com" />
+       
+    <meta property="og:title" content="Sabflip | The LEADING in-game ROBLOX game site!" />
+       
+    <meta property="og:description"        
+        content="Sabflip is the first in-game ROBLOX game site! Try your luck with your in-game ROBLOX ITEMS on our unique PVP game modes!" />
 
-    <!-- Tailwind CSS CDN for utility classes -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <!-- Tailwind CSS CDN for utility classes -->
+       
+    <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Font Awesome for icons -->
+       
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Link to External Custom Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- CRITICAL FIX: Load the Firebase Core Library (defines window.firebase) -->
+    <!-- NOTE: We keep the specific imports in script.js for modularity, but need this global -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-    <!-- Configuration for dark mode and color scheme handling (from original source) -->
-    <script>
-        !function () {
-            try {
-                var d = document.documentElement
-                    , c = d.classList;
-                c.remove('light', 'dark');
-                var e = localStorage.getItem('theme');
-                if ('system' === e || (!e && false)) {
-                    var t = '(prefers-color-scheme: dark)'
-                        , m = window.matchMedia(t);
-                    if (m.media !== t || m.matches) {
-                        d.style.colorScheme = 'dark';
-                        c.add('dark')
-                    } else {
-                        d.style.colorScheme = 'light';
-                        c.add('light')
-                    }
-                } else if (e) {
-                    c.add(e || '')
-                } else {
-                    c.add('dark')
-                }
-                if (e === 'light' || e === 'dark' || !e)
-                    d.style.colorScheme = e || 'dark'
-            } catch (e) { }
-        }()
-    </script>
+
+        <!-- Link to External Custom Styles -->
+       
+    <link rel="stylesheet" href="css/styles.css">
+
+        <!-- Configuration for dark mode and color scheme handling (from original source) -->
+       
+    <script>
+        !function () {
+            try {
+                var d = document.documentElement
+                    , c = d.classList;
+                c.remove('light', 'dark');
+                var e = localStorage.getItem('theme');
+                if ('system' === e || (!e && false)) {
+                    var t = '(prefers-color-scheme: dark)'
+                        , m = window.matchMedia(t);
+                    if (m.media !== t || m.matches) {
+                        d.style.colorScheme = 'dark';
+                        c.add('dark')
+                    } else {
+                        d.style.colorScheme = 'light';
+                        c.add('light')
+                    }
+                } else if (e) {
+                    c.add(e || '')
+                } else {
+                    c.add('dark')
+                }
+                if (e === 'light' || e === 'dark' || !e)
+                    d.style.colorScheme = e || 'dark'
+            } catch (e) { }
+        }()
+    </script>
 </head>
 
 <body class="dark">
-    <!-- Initial Loading Overlay -->
-    <div id="loading-overlay"
-        class="pointer-events-none fixed z-50 flex h-dvh w-screen items-center justify-center bg-gray-900">
-        <div class="text-3xl font-bold text-white glow-on-hover">Sabflip (Loading...)</div>
-    </div>
+        <!-- Initial Loading Overlay -->
+        <div id="loading-overlay"        
+        class="pointer-events-none fixed z-50 flex h-dvh w-screen items-center justify-center bg-gray-900">
+                <div class="text-3xl font-bold text-white glow-on-hover">Sabflip (Loading...)</div>
+            </div>
 
-    <!-- Main Application Container -->
-    <div id="__next" class="flex h-dvh flex-col">
+        <!-- Main Application Container -->
+        <div id="__next" class="flex h-dvh flex-col">
 
-        <!-- Navigation Bar -->
-        <nav
-            class="fixed z-40 flex h-20 w-full items-center justify-between border-b border-gray-700 bg-nav px-4 sm:px-8">
+                <!-- Navigation Bar -->
+                <nav            
+            class="fixed z-40 flex h-20 w-full items-center justify-between border-b border-gray-700 bg-nav px-4 sm:px-8">
 
-            <!-- Desktop Navigation -->
-            <div class="hidden items-center gap-16 xl:flex">
-                <a href="/" class="flex shrink-0">
-                    <span class="text-2xl font-extrabold text-white glow-on-hover">SAB<span
-                            class="text-primary">FLIP</span></span>
-                </a>
-                <ul class="flex items-center gap-0 text-sm">
-                    <li>
-                        <a class="relative flex h-20 items-center gap-2 border-b-2 border-b-primary px-6 text-sm font-semibold uppercase text-white transition hover:opacity-80 glow-on-hover"
-                            href="/">
-                            <i class="fas fa-coins"></i> CoinFlip
-                        </a>
-                    </li>
-                    <li>
-                        <!-- Affiliates and Leaderboard removed for now. Only Discord remains. -->
-                        <a target="_blank"
-                            class="flex h-20 items-center gap-2 px-3 text-sm font-semibold uppercase text-white/60 hover:opacity-80 glow-on-hover"
-                            href="https://discord.gg/sabflip">
-                            <i class="fab fa-discord"></i> Discord
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                        <!-- Desktop Navigation -->
+                        <div class="hidden items-center gap-16 xl:flex">
+                                <a href="/" class="flex shrink-0">
+                                        <span class="text-2xl font-extrabold text-white glow-on-hover">SAB<span        
+                                                class="text-primary">FLIP</span></span>
+                                    </a>
+                                <ul class="flex items-center gap-0 text-sm">
+                                        <li>
+                                                <a
+                            class="relative flex h-20 items-center gap-2 border-b-2 border-b-primary px-6 text-sm font-semibold uppercase text-white transition hover:opacity-80 glow-on-hover"
+                                                        href="/">
+                                                        <i class="fas fa-coins"></i> CoinFlip
+                                                    </a>
+                                            </li>
+                                        <li>
+                                               
+                        <!-- Affiliates and Leaderboard removed for now. Only Discord remains. -->
+                                                <a target="_blank"                            
+                            class="flex h-20 items-center gap-2 px-3 text-sm font-semibold uppercase text-white/60 hover:opacity-80 glow-on-hover"
+                                                        href="https://discord.gg/sabflip">
+                                                        <i class="fab fa-discord"></i> Discord
+                                                    </a>
+                                            </li>
+                                    </ul>
+                            </div>
 
-            <!-- Dynamic Login/Profile Container (Desktop) -->
-            <div id="login-profile-container-desktop" class="hidden xl:block">
-                <!-- Content injected by script.js -->
-                <button id="login-btn-desktop"
-                    class="inline-flex items-center justify-center gap-2 bg-primary h-10 py-2 rounded-lg px-8 font-semibold text-gray-900 hover:opacity-90 glow-on-hover">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-            </div>
+                        <!-- Dynamic Login/Profile Container (Desktop) -->
+                        <div id="login-profile-container-desktop" class="hidden xl:block">
+                                <!-- Content injected by script.js -->
+                                <button id="login-btn-desktop"                    
+                    class="inline-flex items-center justify-center gap-2 bg-primary h-10 py-2 rounded-lg px-8 font-semibold text-gray-900 hover:opacity-90 glow-on-hover">
+                                        <i class="fas fa-sign-in-alt"></i> Login
+                                    </button>
+                            </div>
 
-            <!-- Mobile Navigation -->
-            <div class="flex w-full items-center justify-between xl:hidden">
-                <a href="/" class="flex shrink-0">
-                    <span class="text-2xl font-extrabold text-white glow-on-hover">SAB<span
-                            class="text-primary">FLIP</span></span>
-                </a>
+                        <!-- Mobile Navigation -->
+                        <div class="flex w-full items-center justify-between xl:hidden">
+                                <a href="/" class="flex shrink-0">
+                                        <span class="text-2xl font-extrabold text-white glow-on-hover">SAB<span        
+                                                class="text-primary">FLIP</span></span>
+                                    </a>
 
-                <!-- Dynamic Login/Profile Container (Mobile) -->
-                <div id="login-profile-container-mobile">
-                    <!-- Content injected by script.js -->
-                    <button id="login-btn-mobile"
-                        class="inline-flex items-center justify-center gap-2 bg-primary h-10 py-2 rounded-lg px-8 font-semibold text-gray-900 hover:opacity-90 glow-on-hover">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </button>
-                </div>
-            </div>
-        </nav>
+                                <!-- Dynamic Login/Profile Container (Mobile) -->
+                                <div id="login-profile-container-mobile">
+                                        <!-- Content injected by script.js -->
+                                        <button id="login-btn-mobile"                        
+                        class="inline-flex items-center justify-center gap-2 bg-primary h-10 py-2 rounded-lg px-8 font-semibold text-gray-900 hover:opacity-90 glow-on-hover">
+                                                <i class="fas fa-sign-in-alt"></i> Login
+                                            </button>
+                                    </div>
+                            </div>
+                    </nav>
 
-        <!-- Main Content Area (Below Nav) -->
-        <div class="mt-20 flex flex-1 overflow-auto">
+                <!-- Main Content Area (Below Nav) -->
+                <div class="mt-20 flex flex-1 overflow-auto">
 
-            <!-- Chat Sidebar (Desktop Only) -->
-            <div class="hidden w-1/4 min-w-[22rem] flex-col gap-2 bg-chat px-3 pt-3 border-r border-gray-700 xl:flex">
-                <!-- Network Status Indicator -->
-                <div id="network-status"
-                    class="flex items-center justify-center rounded-xl border px-6 py-2 text-sm font-semibold transition-all">
-                    <!-- Content injected by script.js -->
-                </div>
+                        <!-- Chat Sidebar (Desktop Only) -->
+                        <div
+                class="hidden w-1/4 min-w-[22rem] flex-col gap-2 bg-chat px-3 pt-3 border-r border-gray-700 xl:flex">
+                                <!-- Network Status Indicator -->
+                                <div id="network-status"                    
+                    class="flex items-center justify-center rounded-xl border px-6 py-2 text-sm font-semibold transition-all">
+                                        <!-- Content injected by script.js -->
+                                    </div>
 
-                <div class="flex items-center justify-between rounded-xl border border-gray-700 bg-card/60 px-6 py-3">
-                    <div class="text-sm font-semibold opacity-50">Messages</div>
-                    <div class="flex items-center gap-2">
-                        <div id="live-users-count" class="text-sm font-semibold opacity-50">0</div>
-                        <div class="animate-pulse rounded-full border-2 border-red-500/50">
-                            <div class="h-2 w-2 rounded-full bg-red-500"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 flex h-full flex-col gap-6 overflow-y-scroll py-2 pr-2 text-white/50">
-                    <div class="text-center mt-10">No messages yet.</div>
-                </div>
-                <form class="pb-6">
-                    <div class="relative mb-2">
-                        <input
-                            class="chat-input flex w-full border-2 border-transparent focus-visible:border-white/60 h-12 rounded-lg bg-input px-3 pr-10 font-semibold text-gray-400 placeholder:text-white/50 disabled:cursor-not-allowed"
-                            placeholder="Login to start chatting!" disabled="" value="" />
-                        <button type="button"
-                            class="absolute right-4 top-1/2 z-10 -translate-y-1/2 transform text-white/50 disabled:cursor-not-allowed">
-                            <i class="far fa-grin-alt h-5 w-5"></i>
-                        </button>
-                    </div>
-                    <button
-                        class="send-button inline-flex items-center justify-center bg-blue-600 font-semibold text-white hover:bg-blue-700 h-10 px-4 py-2 flex-1 w-full rounded-md"
-                        type="submit" disabled="">Send</button>
-                </form>
-            </div>
+                                <div
+                    class="flex items-center justify-between rounded-xl border border-gray-700 bg-card/60 px-6 py-3">
+                                        <div class="text-sm font-semibold opacity-50">Messages</div>
+                                        <div class="flex items-center gap-2">
+                                                <div id="live-users-count" class="text-sm font-semibold opacity-50">0
+                        </div>
+                                                <div class="animate-pulse rounded-full border-2 border-red-500/50">
+                                                        <div class="h-2 w-2 rounded-full bg-red-500"></div>
+                                                    </div>
+                                            </div>
+                                    </div>
+                                <div class="mb-2 flex h-full flex-col gap-6 overflow-y-scroll py-2 pr-2 text-white/50">
+                                        <div class="text-center mt-10">No messages yet.</div>
+                                    </div>
+                                <form class="pb-6">
+                                        <div class="relative mb-2">
+                                                <input                            
+                            class="chat-input flex w-full border-2 border-transparent focus-visible:border-white/60 h-12 rounded-lg bg-input px-3 pr-10 font-semibold text-gray-400 placeholder:text-white/50 disabled:cursor-not-allowed"
+                                                        placeholder="Login to start chatting!" disabled="" value="" />
+                                                <button type="button"                            
+                            class="absolute right-4 top-1/2 z-10 -translate-y-1/2 transform text-white/50 disabled:cursor-not-allowed">
+                                                        <i class="far fa-grin-alt h-5 w-5"></i>
+                                                    </button>
+                                            </div>
+                                        <button                        
+                        class="send-button inline-flex items-center justify-center bg-blue-600 font-semibold text-white hover:bg-blue-700 h-10 px-4 py-2 flex-1 w-full rounded-md"
+                                                type="submit" disabled="">Send</button>
+                                    </form>
+                                </div>
 
-            <!-- Game/Main Content -->
-            <div class="w-full overflow-auto">
-                <div class="px-4 pb-2 pt-4">
-                    <!-- Announcement Banner -->
-                    <div class="w-full rounded-xl border p-4 border-green-500 bg-green-500/10 shadow-md">
-                        <div class="text-lg font-semibold text-green-500">BOOST YOUR IN-GAME ITEMS WITH OUR PVP GAME
-                            MODES!</div>
-                        <p class="font-medium text-green-100">
-                            Check out CoinFlip to get started!
-                        </p>
-                    </div>
-                </div>
+                        <!-- Game/Main Content -->
+                        <div class="w-full overflow-auto">
+                                <div class="px-4 pb-2 pt-4">
+                                        <!-- Announcement Banner -->
+                                        <div
+                        class="w-full rounded-xl border p-4 border-green-500 bg-green-500/10 shadow-md">
+                                                <div class="text-lg font-semibold text-green-500">BOOST YOUR IN-GAME
+                            ITEMS WITH OUR PVP GAME
+                                                        MODES!</div>
+                                                <p class="font-medium text-green-100">
+                                                        Check out CoinFlip to get started!
+                                                    </p>
+                                            </div>
+                                    </div>
 
-                <div class="flex w-full flex-col px-4 pb-32 pt-3">
+                                <div class="flex w-full flex-col px-4 pb-32 pt-3">
 
-                    <!-- Game Statistics -->
-                    <div class="grid gap-4 md:grid-cols-3">
-                        <div class="rounded-xl border border-gray-700 bg-card px-4 py-3 glow-on-hover">
-                            <div id="total-items" class="text-2xl font-bold">0</div>
-                            <div class="font-semibold opacity-60">Total Items</div>
-                        </div>
-                        <div class="rounded-xl border border-gray-700 bg-card px-4 py-3 glow-on-hover">
-                            <div id="total-value" class="flex items-center gap-2 text-2xl font-bold">
-                                <i class="fas fa-gem text-primary"></i> 0
-                            </div>
-                            <div class="font-semibold opacity-60">Total Value</div>
-                        </div>
-                        <div class="rounded-xl border border-gray-700 bg-card px-4 py-3 glow-on-hover">
-                            <div id="active-games" class="text-2xl font-bold">0</div>
-                            <div class="font-semibold opacity-60">Active Games</div>
-                        </div>
-                    </div>
+                                        <!-- Game Statistics -->
+                                        <div class="grid gap-4 md:grid-cols-3">
+                                                <div
+                            class="rounded-xl border border-gray-700 bg-card px-4 py-3 glow-on-hover">
+                                                        <div id="total-items" class="text-2xl font-bold">0</div>
+                                                        <div class="font-semibold opacity-60">Total Items</div>
+                                                    </div>
+                                                <div
+                            class="rounded-xl border border-gray-700 bg-card px-4 py-3 glow-on-hover">
+                                                        <div id="total-value"
+                                class="flex items-center gap-2 text-2xl font-bold">
+                                                                <i class="fas fa-gem text-primary"></i> 0
+                                                            </div>
+                                                        <div class="font-semibold opacity-60">Total Value</div>
+                                                    </div>
+                                                <div
+                            class="rounded-xl border border-gray-700 bg-card px-4 py-3 glow-on-hover">
+                                                        <div id="active-games" class="text-2xl font-bold">0</div>
+                                                        <div class="font-semibold opacity-60">Active Games</div>
+                                                    </div>
+                                            </div>
 
-                    <!-- Game Controls and Filtering -->
-                    <div class="mb-6 mt-4 flex flex-col justify-between gap-4 sm:flex-row-reverse sm:items-center">
-                        <div class="flex items-center justify-start gap-2">
-                            <button
-                                class="inline-flex items-center bg-primary text-gray-900 h-10 px-4 py-2 rounded-lg font-semibold hover:opacity-90 glow-on-hover">Create</button>
-                            <button
-                                class="inline-flex items-center bg-gray-700 text-white h-10 px-4 py-2 rounded-lg font-semibold hover:bg-gray-600 glow-on-hover">History</button>
-                        </div>
-                        <div class="w-full sm:w-auto">
-                            <div role="tablist"
-                                class="text-gray-400 rounded-lg p-1 grid h-10 w-full grid-cols-1 bg-input">
-                                <button type="button" role="tab"
-                                    class="inline-flex items-center justify-center rounded-md py-1.5 text-sm font-medium transition-all shadow-sm px-5 bg-primary font-semibold text-gray-900 glow-on-hover">SAB</button>
-                            </div>
-                        </div>
-                    </div>
+                                        <!-- Game Controls and Filtering -->
+                                        <div
+                        class="mb-6 mt-4 flex flex-col justify-between gap-4 sm:flex-row-reverse sm:items-center">
+                                                <div class="flex items-center justify-start gap-2">
+                                                        <button                                
+                                class="inline-flex items-center bg-primary text-gray-900 h-10 px-4 py-2 rounded-lg font-semibold hover:opacity-90 glow-on-hover">Create</button>
+                                                        <button                                
+                                class="inline-flex items-center bg-gray-700 text-white h-10 px-4 py-2 rounded-lg font-semibold hover:bg-gray-600 glow-on-hover">History</button>
+                                                    </div>
+                                                <div class="w-full sm:w-auto">
+                                                        <div role="tablist"                                
+                                class="text-gray-400 rounded-lg p-1 grid h-10 w-full grid-cols-1 bg-input">
+                                                                <button type="button" role="tab"                        
+                                               
+                                    class="inline-flex items-center justify-center rounded-md py-1.5 text-sm font-medium transition-all shadow-sm px-5 bg-primary font-semibold text-gray-900 glow-on-hover">SAB</button>
+                                                            </div>
+                                                    </div>
+                                            </div>
 
-                    <!-- Live Game List Area -->
-                    <div class="flex-1">
-                        <div id="game-list-area"
-                            class="flex h-full flex-col gap-4 p-4 rounded-xl border border-gray-700 bg-card text-gray-400">
-                            <div class="text-center font-bold text-xl">No Active Games Found</div>
-                            <div class="text-center">Looks like it's a quiet time. Be the first to create a game!</div>
-                        </div>
-                        </div>
-                    </div>
+                                        <!-- Live Game List Area -->
+                                        <div class="flex-1">
+                                                <div id="game-list-area"                            
+                            class="flex h-full flex-col gap-4 p-4 rounded-xl border border-gray-700 bg-card text-gray-400">
+                                                        <div class="text-center font-bold text-xl">No Active Games Found
+                            </div>
+                                                        <div class="text-center">Looks like it's a quiet time. Be the
+                                first to create a game!</div>
+                                                    </div>
+                                            </div>
+                                        </div>
 
-                    <!-- Roblox Verification Modal -->
-    <div id="verification-modal"
-        class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm p-4">
-        <div class="w-full max-w-md rounded-xl border border-gray-700 bg-nav p-6 text-white shadow-2xl">
+                                    <!-- Roblox Verification Modal -->
+                    <div id="verification-modal"        
+                    class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm p-4">
+                            <div
+                        class="w-full max-w-md rounded-xl border border-gray-700 bg-nav p-6 text-white shadow-2xl">
 
-            <!-- Notification Area (for messages/errors) -->
-            <div id="modal-message-area" class="mb-4 hidden">
-                <div id="modal-message-text" class="p-3 rounded-lg text-sm font-medium"></div>
-            </div>
+                                    <!-- Notification Area (for messages/errors) -->
+                                    <div id="modal-message-area" class="mb-4 hidden">
+                                            <div id="modal-message-text" class="p-3 rounded-lg text-sm font-medium">
+                            </div>
+                                        </div>
 
-            <div id="modal-content-step-1">
-                <h2 class="text-2xl font-bold text-center mb-6 text-primary">Roblox Account Verification</h2>
-                <p class="text-sm text-center mb-6 text-white/70">
-                    To link your Roblox account, please enter your username below.
-                </p>
+                                    <div id="modal-content-step-1">
+                                            <h2 class="text-2xl font-bold text-center mb-6 text-primary">Roblox Account
+                                Verification</h2>
+                                            <p class="text-sm text-center mb-6 text-white/70">
+                                                    To link your Roblox account, please enter your username below.
+                                                </p>
 
-                <div class="mb-4">
-                    <label for="roblox-username-input" class="block text-sm font-medium mb-2">Roblox Username:</label>
-                    <input type="text" id="roblox-username-input" placeholder="e.g., Builderman"
-                        class="w-full rounded-lg border border-gray-600 bg-input p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary chat-input" />
-                </div>
+                                            <div class="mb-4">
+                                                    <label for="roblox-username-input"
+                                    class="block text-sm font-medium mb-2">Roblox Username:</label>
+                                                    <input type="text" id="roblox-username-input"
+                                    placeholder="e.g., Builderman"                        
+                                    class="w-full rounded-lg border border-gray-600 bg-input p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary chat-input" />
+                                                </div>
 
-                <button id="generate-code-button"
-                    class="w-full inline-flex items-center justify-center gap-2 bg-primary h-12 rounded-lg px-8 font-semibold text-gray-900 hover:opacity-90 glow-on-hover transition duration-200">
-                    Generate Verification Code
-                </button>
-            </div>
+                                            <button id="generate-code-button"                    
+                                class="w-full inline-flex items-center justify-center gap-2 bg-primary h-12 rounded-lg px-8 font-semibold text-gray-900 hover:opacity-90 glow-on-hover transition duration-200">
+                                                    Generate Verification Code
+                                                </button>
+                                        </div>
 
-            <div id="modal-content-step-2" class="hidden">
-                <h2 class="text-2xl font-bold text-center mb-6 text-primary">Verification Step 2/2</h2>
+                                    <div id="modal-content-step-2" class="hidden">
+                                            <h2 class="text-2xl font-bold text-center mb-6 text-primary">Verification
+                                Step 2/2</h2>
 
-                <p class="text-sm text-white/70 mb-4">
-                    Please copy the unique code below and paste it into the **About** section of your Roblox Profile.
-                </p>
+                                            <p class="text-sm text-white/70 mb-4">
+                                                    Please copy the unique code below and paste it into the **About**
+                                section of your Roblox Profile.
+                                                </p>
 
-                <div class="mb-4 text-center">
-                    <span class="text-sm font-medium text-gray-400 block mb-1">YOUR UNIQUE CODE:</span>
-                    <div id="verification-code-display"
-                        class="text-4xl font-extrabold text-white tracking-widest bg-gray-700 p-4 rounded-lg select-all glow-on-hover">
-                        <!-- CODE WILL BE INJECTED HERE -->
-                    </div>
-                </div>
+                                            <div class="mb-4 text-center">
+                                                    <span class="text-sm font-medium text-gray-400 block mb-1">YOUR
+                                    UNIQUE CODE:</span>
+                                                    <div id="verification-code-display"                        
+                                    class="text-4xl font-extrabold text-white tracking-widest bg-gray-700 p-4 rounded-lg select-all glow-on-hover">
+                                                            <!-- CODE WILL BE INJECTED HERE -->
+                                                        </div>
+                                                </div>
 
-                <p class="text-xs text-center text-red-400 mb-6">
-                    ⚠️ Code expires in 10 minutes.
-                </p>
+                                            <p class="text-xs text-center text-red-400 mb-6">
+                                                    ⚠️ Code expires in 10 minutes.
+                                                </p>
 
-                <button id="verify-account-button"
-                    class="w-full inline-flex items-center justify-center gap-2 bg-green-600 h-12 rounded-lg px-8 font-semibold text-white hover:bg-green-700 transition duration-200">
-                    <i class="fas fa-check-circle"></i> Verify Account
-                </button>
-            </div>
+                                            <button id="verify-account-button"                    
+                                class="w-full inline-flex items-center justify-center gap-2 bg-green-600 h-12 rounded-lg px-8 font-semibold text-white hover:bg-green-700 transition duration-200">
+                                                    <i class="fas fa-check-circle"></i> Verify Account
+                                                </button>
+                                        </div>
 
-            <button id="close-modal-button"
-                class="mt-4 w-full text-sm text-white/50 hover:text-white transition duration-200">
-                Cancel
-            </button>
-        </div>
-    </div>
+                                    <button id="close-modal-button"                
+                            class="mt-4 w-full text-sm text-white/50 hover:text-white transition duration-200">
+                                            Cancel
+                                        </button>
+                                </div>
+                        </div>
 
-    <!-- Link to External JavaScript -->
-    <script src="script.js" type="module"></script>
+                    <!-- Link to External JavaScript -->
+                   
+                <script src="script.js" type="module"></script>
 </body>
 
 </html>
