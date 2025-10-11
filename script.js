@@ -4,23 +4,10 @@ import { getFirestore, collection, query, onSnapshot, doc, addDoc, updateDoc, de
 
 // --- GLOBAL VARIABLES (Provided by Canvas Environment) ---
 const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+let initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
 // Use a fallback for firebaseConfig, which will be checked inside the init loop
 let firebaseConfig = null;
-try {
-    // Attempt to access and parse the global variable immediately
-    if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-        firebaseConfig = JSON.parse(__firebase_config);
-    }
-} catch (e) {
-    console.warn("Could not parse initial __firebase_config.");
-}
-const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-// --- API Endpoints ---
-const USER_DATA_API_ENDPOINT = '/api/user-data';
-const GENERATE_CODE_API_ENDPOINT = '/api/generate-code';
-const VERIFY_USER_API_ENDPOINT = '/api/verify-user';
 
 // --- Firebase API Access (Assumed to be globally available via CDN links in index.html) ---
 const initializeApp = window.firebase ? window.firebase.initializeApp : () => console.error("Firebase App not available.");
@@ -158,7 +145,6 @@ async function fetchUserData(user) {
 
 // --- Main Application Flow Logic ---
 
-// --- CRITICAL STABILITY FIX: Initialize Firebase robustly ---
 async function initializeFirebase() {
     // 1. Check if Firebase is already initialized
     if (app) return;
@@ -230,7 +216,6 @@ async function initializeFirebase() {
         setupEventListeners();
     }
 }
-// --- END CRITICAL STABILITY FIX ---
 
 
 function handleUserLogin(userData) {
