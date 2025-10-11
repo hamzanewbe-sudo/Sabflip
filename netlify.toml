@@ -1,0 +1,27 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "zip"
+
+# --- PROXY REDIRECTS: Map clean URLs to Function paths ---
+
+# Handles the initial user data fetch and checks for verification status
+[[redirects]]
+  from = "/api/user-data"
+  to = "/.netlify/functions/fetch-user-data"
+  status = 200
+
+# Handles generating and retrieving the verification code
+[[redirects]]
+  from = "/api/generate-code"
+  to = "/.netlify/functions/generate-verification-code"
+  status = 200
+
+# Handles the final verification check against the user's Roblox profile
+[[redirects]]
+  from = "/api/verify-user"
+  to = "/.netlify/functions/verify-roblox-user"
+  status = 200

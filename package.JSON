@@ -1,0 +1,20 @@
+{
+    "name": "sabflip",
+    "version": "1.0.0",
+    "description": "Sabflip Roblox Item Trading Site",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "roblox",
+        "netlify",
+        "jamstack"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^1.6.0",
+        "firebase": "^11.6.1"
+    }
+}

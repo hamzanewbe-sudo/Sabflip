@@ -1,0 +1,165 @@
+/* Custom CSS for Sabflip Dark Theme and Glowing Effects */
+
+/* --- Color Variables --- */
+:root {
+    --bg-nav: #1e293b;
+    /* Slate-800 for the Navbar */
+    --bg-chat: #1f2937;
+    /* Gray-800 for the Chat Sidebar */
+    --bg-card: #374151;
+    /* Gray-700 for Card/Panel backgrounds */
+    --bg-input: #4b5563;
+    /* Gray-600 for input fields */
+    --text-primary: #f97316;
+    /* Vibrant Orange-600 for primary accents */
+    --glow-color: #ff8c40;
+    /* Slightly brighter orange for the glow effect */
+}
+
+/* --- Base Body and Theme Overrides --- */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0f172a;
+    /* Deep Navy Background */
+    color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Map custom variables to Tailwind-like utility classes */
+.bg-nav {
+    background-color: var(--bg-nav);
+}
+
+.bg-chat {
+    background-color: var(--bg-chat);
+}
+
+.bg-card {
+    background-color: var(--bg-card);
+}
+
+.bg-input {
+    background-color: var(--bg-input);
+}
+
+.text-primary {
+    color: var(--text-primary);
+}
+
+.border-b-primary {
+    border-color: var(--text-primary);
+}
+
+/* Apply primary color to buttons with bg-primary */
+.bg-primary {
+    background-color: var(--text-primary);
+    color: #1e293b;
+    /* Dark text on the bright button */
+}
+
+/* --- Glow and Lift Effect (Key Feature) --- */
+.glow-on-hover {
+    /* Smooth transition for all dynamic properties */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Base style for elements that contain text/icons (like navigation links) */
+.glow-on-hover:hover {
+    /* Text/Icon Glow */
+    color: var(--glow-color) !important;
+    text-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color);
+
+    /* Subtle Lift effect */
+    transform: translateY(-2px);
+}
+
+/* Specific styling for Card/Box elements (like stat cards and buttons) */
+.bg-primary.glow-on-hover:hover,
+.bg-card.glow-on-hover:hover,
+.border-gray-700.glow-on-hover:hover {
+    /* Box Glow */
+    box-shadow: 0 4px 15px rgba(255, 140, 64, 0.5),
+        /* Soft, broad shadow */
+        0 0 5px rgba(255, 140, 64, 0.8);
+    /* Intense, sharp shadow */
+
+    /* Pronounced Lift effect */
+    transform: translateY(-4px);
+}
+
+/* --- Rainbow Text Animation (for the 'NEW' tag) --- */
+@keyframes rainbow-text {
+    0% {
+        color: #ff0000;
+    }
+
+    16% {
+        color: #ff7f00;
+    }
+
+    33% {
+        color: #ffff00;
+    }
+
+    50% {
+        color: #00ff00;
+    }
+
+    66% {
+        color: #0000ff;
+    }
+
+    83% {
+        color: #4b0082;
+    }
+
+    100% {
+        color: #ff0000;
+    }
+}
+
+.rainbow-text-animated {
+    animation: rainbow-text 4s ease-in-out infinite;
+}
+
+/* --- Icon Sizing Adjustments --- */
+.nav-icon {
+    width: 1em;
+    height: 1em;
+}
+
+/* --- MODAL CENTERING FIX --- */
+/* This forces the fixed overlay to use the full viewport height/width 
+   and guarantees the content inside (the actual verification box) is centered. */
+#verification-modal {
+    width: 100vw;
+    min-height: 100vh;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* --- RESPONSIVE CHAT/MAIN LAYOUT --- */
+.mt-20 {
+    /* Adjusted margin-top to clear the fixed navbar */
+    margin-top: 5rem !important;
+}
+
+.flex-1 {
+    /* Standard flex-grow */
+    flex: 1 1 0%;
+}
+
+.overflow-auto {
+    /* Ensure scrolling within containers */
+    overflow: auto;
+}
+
+/* --- General Fixes for Responsive Design (Mobile Stacking) --- */
+@media (max-width: 1280px) {
+
+    /* xl:hidden breakpoint equivalent */
+    .w-full {
+        width: 100%;
+    }
+}
