@@ -18,7 +18,6 @@ try {
 const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
 // --- API Endpoints ---
-// FIX: Use the clean redirect paths defined in netlify.toml
 const USER_DATA_API_ENDPOINT = '/api/user-data';
 const GENERATE_CODE_API_ENDPOINT = '/api/generate-code';
 const VERIFY_USER_API_ENDPOINT = '/api/verify-user';
@@ -305,7 +304,7 @@ async function handleGenerateCode() {
         const user = auth.currentUser;
         const idToken = await getIdToken(user);
 
-        // FIX: Use clean proxy path
+        // FIX: Send the username in the JSON body as a POST request
         const response = await fetch(GENERATE_CODE_API_ENDPOINT, {
             method: 'POST',
             headers: {
@@ -436,4 +435,4 @@ function setupEventListeners() {
 
 // --- Main Execution ---
 
-document.addEventListener('DOMContentLoaded', initializeFirebaseAndAuth);
+document.addEventListener('DOMContentLoaded', initializeFirebase);

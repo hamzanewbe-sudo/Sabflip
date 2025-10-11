@@ -4,23 +4,25 @@
 
 [functions]
   directory = "netlify/functions"
-  node_bundler = "zip"
+  node_bundler = "zisi" # Changed to zisi for standard Netlify build
 
-# --- PROXY REDIRECTS: Map clean URLs to Function paths ---
+# --- PROXY REDIRECT RULES ---
+# These map clean API calls to the actual Netlify function paths.
+# They are essential for the front-end login to work.
 
-# Handles the initial user data fetch and checks for verification status
+# 1. User Data Fetch (GET/Firebase Authentication)
 [[redirects]]
   from = "/api/user-data"
   to = "/.netlify/functions/fetch-user-data"
   status = 200
 
-# Handles generating and retrieving the verification code
+# 2. Generate Verification Code (POST)
 [[redirects]]
   from = "/api/generate-code"
   to = "/.netlify/functions/generate-verification-code"
   status = 200
 
-# Handles the final verification check against the user's Roblox profile
+# 3. Verify Account (POST)
 [[redirects]]
   from = "/api/verify-user"
   to = "/.netlify/functions/verify-roblox-user"
